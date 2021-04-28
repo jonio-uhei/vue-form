@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>フォームをクリックするとフォームの背景色が変わる</title>
+    </head>
+    <body>
+        <div id="app">   
+            <form
+                :class="classList"
+            >
+                <input 
+                    type="text"
+                    class="text-input"
+                    placeholder="Add new list"
+                    @focusin="startEditing"
+                    @focusout="finishEditing"
+                >
+                <button 
+                    type="submit"
+                    class="add-button"
+                >Add</button>
+            </form>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+        <script>
+
+            var app = new Vue({
+                el: '#app',
+                data:{
+                    isEditing:false
+                },
+                methods:{
+                    startEditing(){
+                        this.isEditing = true;
+                    },
+                    finishEditing(){
+                        this.isEditing = false;
+                    }
+                },
+                computed:{
+                    classList(){
+                        const classList  = ['addlist']
+                        if(this.isEditing){
+                            classList.push('active');
+                        }
+                        return classList;
+                    }
+                }
+            })
+        </script>
+
+        <style>
+            #app{
+                width: 200px;
+                margin-left: 300px;
+                margin-top: 100px;
+            }
+            body{
+                background-color:skyblue;
+            }
+            .text-input {
+                padding: 20px 15px;
+                width: calc(100% - 30px);
+                background-color: #ccc;
+                border-radius: 8px;
+                cursor: pointer;
+                border: none;
+                font-family: "Noto Sans Japanese", "Noto Sans", 'system-ui', sans-serif;
+                font-weight: 700;
+                font-size: 24px;
+                color: #242424;
+                cursor: pointer;
+                overflow: overlay;
+            }
+            .text-input:focus {
+                outline: 0;
+                cursor: initial;
+            }
+            .add-button {
+                margin-top: 15px;
+                padding: 15px 18px;
+                background-color: #999;
+                border: none;
+                border-radius: 8px;
+                font-family: "Noto Sans Japanese", "Noto Sans", 'system-ui', sans-serif;
+                font-weight: 700;
+                font-size: 18px;
+                color: #fff;
+            }
+            .add-button:hover {
+                opacity: 0.8;
+                cursor: pointer;
+            }
+            .active .text-input {
+                background-color: #fff;
+            }
+            .addable .add-button {
+                background-color: #00d78f;
+                pointer-events: auto;
+                cursor: pointer;
+            }
+            .add-button:active {
+                background-color: #00d78f;
+            }
+        </style>
+    </body>
+</html>
